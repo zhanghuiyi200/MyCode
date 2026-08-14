@@ -67,8 +67,26 @@ string minus(string a,string b){
 	return ans;
 }
 
-string multiplication(string a,string b){
-
+string mul(string a,string b){
+    if(a=="0" || b=="0")return "0";
+    reverse(a.begin(),a.end());
+    reverse(b.begin(),b.end());
+    size_t lena=a.size();
+    size_t lenb=b.size();
+    string res(lena+lenb+1,'0');
+    for(size_t i=0;i<lena;i++){
+        uint64_t carry=0;
+        for(size_t j=0;j<lenb || carry;j++){
+            uint64_t curr=res[i+j]-'0';
+            if(j<lenb)curr+=(uint64_t)(a[i]-'0')*(b[j]-'0');
+            curr+=carry;
+            res[i+j]=(char)(curr%10+'0');
+            carry=curr/10;
+        }
+    }
+    while(res.size()>1 && res.back()=='0')res.pop_back();
+    reverse(res.begin(),res.end());
+    return res;
 }
 
 string division(string a,string b){
